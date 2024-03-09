@@ -26,9 +26,18 @@ stages:
         package: '$(System.DefaultWorkingDirectory)/**/*.zip'
         deploymentMethod: 'zipDeploy'
   
-  - job: BuildDockerService
+  - job: BuildDocker_SalesBookLB
+    displayName: BuildDockerService-SalesBook.LB
     steps:
     - task: Docker@2
       inputs:
         command: 'build'
         Dockerfile: '**/SalesBook.LB/Dockerfile'
+      
+  - job: BuildDocker_SalesBookWEB
+    displayName: BuildDockerService-SalesBook.WEB
+    steps:
+    - task: Docker@2
+      inputs:
+        command: 'build'
+        Dockerfile: '**/SalesBook.WEB/Dockerfile'
