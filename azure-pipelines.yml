@@ -35,7 +35,9 @@ stages:
         Dockerfile: '**/SalesBook.LB/Dockerfile'
         containerRegistry: 'sub06-meritoacrmf'
         repository: 'SalesBook.LB'
-
+        tags: |
+          latest
+          $(Build.SourceVersion)
       
   - job: BuildDocker_SalesBookWEB
     displayName: BuildDockerService-SalesBook.WEB
@@ -46,6 +48,9 @@ stages:
         Dockerfile: '**/SalesBook.WEB/Dockerfile'
         containerRegistry: 'sub06-meritoacrmf'
         repository: 'SalesBook.WEB'
+        tags: |
+          latest
+          $(Build.SourceVersion)
 
 - stage: PushImages
 
