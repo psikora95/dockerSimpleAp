@@ -7,5 +7,16 @@ stages:
   jobs:
   - job: BuildDotnetBackend
     steps:
-    - script: echo Hello, world!
-      displayName: 'Run a one-line script'
+    - script: dotnet build --configuration $(buildConfiguration)
+      displayName: 'dotnet build $(buildConfiguration)'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+    - task: AzureWebApp@1
+      inputs:
+        azureSubscription: 'sub-06(82fec995-d706-4757-a002-6bfc2d89631a)'
+        appType: 'webApp'
+        appName: 'mf01dev'
+        package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+        deploymentMethod: 'zipDeploy'
