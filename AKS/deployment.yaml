@@ -5,7 +5,7 @@ metadata:
   labels:
     app: salesbooklb
 spec:
-  replicas: 10
+  replicas: 1
   selector:
     matchLabels:
       app: nginx
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: mfacr03.azurecr.io/nginx-sample:latest
+        image: meritoacrmf.azurecr.io/salesbook.lb:latest
         ports:
         - containerPort: 80
       imagePullSecrets:
@@ -29,7 +29,7 @@ metadata:
   labels:
     app: salesbookapache
 spec:
-  replicas: 10
+  replicas: 1
   selector:
     matchLabels:
       app: apache
@@ -40,7 +40,7 @@ spec:
     spec:
       containers:
       - name: apache
-        image: mfacr03.azurecr.io/apache-docker:latest
+        image: meritoacrmf.azurecr.io/salesbook.web:latest
         ports:
         - containerPort: 81
       imagePullSecrets:
