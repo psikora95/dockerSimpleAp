@@ -31,16 +31,20 @@ stages:
     steps:
     - task: Docker@2
       inputs:
-        command: 'build'
+        command: 'buildAndPush'
         Dockerfile: '**/SalesBook.LB/Dockerfile'
+        containerRegistry: 'sub06-meritoacrmf'
+        repository: 'meritoService'
       
   - job: BuildDocker_SalesBookWEB
     displayName: BuildDockerService-SalesBook.WEB
     steps:
     - task: Docker@2
       inputs:
-        command: 'build'
+        command: 'buildAndPush'
         Dockerfile: '**/SalesBook.WEB/Dockerfile'
+        containerRegistry: 'sub06-meritoacrmf'
+        repository: 'meritoService'
 
 - stage: PushImages
 
@@ -48,9 +52,7 @@ stages:
     vmImage: ubuntu-latest
   
   jobs:
-  - job: PushImages
+  - job: listAllImages
     condition: succeeded()
     steps:
-    - task: Docker@2
-      inputs:
-        command: 'push'
+    - script: docker images
