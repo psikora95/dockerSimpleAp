@@ -8,14 +8,17 @@ stages:
   - job: BuildDotnetBackend
     steps:
     - task: DotNetCoreCLI@2
+      name: BuildDotNetApp
       inputs:
         command: 'build'
         projects: '**/MyFirstAzureWebApp/MyFirstAzureWebApp.csproj'
     - task: DotNetCoreCLI@2
+      name: PublishDotNetApp
       inputs:
         command: 'publish'
         publishWebProjects: true
     - task: AzureWebApp@1
+      name: DeploytoWebApp
       inputs:
         azureSubscription: 'sub-06(82fec995-d706-4757-a002-6bfc2d89631a)'
         appType: 'webApp'
