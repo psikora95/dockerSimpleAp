@@ -1,0 +1,32 @@
+ssh-keygen -t rsa
+
+az account set --subscription "MichalFurmankiewicz"
+az ad sp create-for-rbac --skip-assignment
+
+#output
+{
+  "appId": "fe5ef524-043d-4f4e-9c74-e92a869bd8c4",
+  "displayName": "azure-cli-2019-06-03-21-07-32",
+  "name": "http://azure-cli-2019-06-03-21-07-32",
+  "password": "347c8a35-3598-45ce-a8ad-cff211d86eb2",
+  "tenant": "d3fd9eb2-1d5e-495d-853f-1ff96ded3671"
+}
+
+az aks get-versions --location eastus --output table
+az group create -n azaks01 -l westeurope
+az group deployment create --name azaks01mf -g azaks01 --template-file azure-aks.json --parameters @azure-aks.parameters.json
+az aks install-cli
+az aks get-credentials -g azaks01 -n mifurmaks02
+kubectl apply -f .\deployment.yaml
+az acr create -g azaks01 -n mfacr03 --sku Basic
+az acr update -n mfacr03 --admin-enabled true
+az acr credential show -n mfacr03 
+docker tag nginx-sample mfacr03.azurecr.io/nginx-sample
+docker tag apache-docker mfacr03.azurecr.io/apache-docker
+az acr login -n mfacr03
+docker push mfacr03.azurecr.io/nginx-sample
+docker push mfacr03.azurecr.io/apache-docker
+kubectl create secret docker-registry regcred --docker-server=mfacr03.azurecr.io --docker-username=mfacr03 --docker-password=dHkns4qkOqzFa/d74km2MuRWzEAIY47U --docker-email=mifurm@cloudarchitects.pl
+kubectl apply -f deployment.yaml
+az aks browse --resource-group azaks01 --name mifurmaks02
+kubectl scale --replicas=10 deployment/salesbooklb

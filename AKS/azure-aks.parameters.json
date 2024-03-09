@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+        "clusterName": {
+			"value": "mifurmaks02"
+		},
+		"dnsPrefix": {
+			"value": "mifurmaks02"
+		},
+		"linuxAdminUsername": {
+			"value": "mifurm"
+		},
+		"sshRSAPublicKey": {
+			"value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPACXdAjW6elc0MSyQIsRtM1nWDXZIQgbYyH8xBcJKDi8mKcHkojiNHhA/XwWPdsSUTIfRu1ssGQyhRdYPCjJOy8WDV2l/eCCPmN6IVsHx8InQWsC/MHIKuqw0vII8TQd0/1ZpukJkZe1y9kmxNK/mZnPDrdwn/v6Rv/xW6oSp4loQsiJmZazRPfLoDrrqupci9kUt12kQHEljB1kXIjKfUkUv2CxOInDpDRdFofVGs0Afnfjv/nkCU1bRIyken2OEhRMaHxBQqvsiqL03jhDZxio0fle/ju+iTlCfYB+0mI0QK4sRzFZFfK/Lr9PuU8Hhfnw27/m/u1OUaYHp3DsX micha@DESKTOP-RGJ6AG0"
+		},
+		"servicePrincipalClientId": {
+			"value": "fe5ef524-043d-4f4e-9c74-e92a869bd8c4"
+		},
+		"servicePrincipalClientSecret": {
+			"value": "347c8a35-3598-45ce-a8ad-cff211d86eb2"
+		}
+	}
+}
