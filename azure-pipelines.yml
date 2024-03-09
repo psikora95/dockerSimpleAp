@@ -41,3 +41,16 @@ stages:
       inputs:
         command: 'build'
         Dockerfile: '**/SalesBook.WEB/Dockerfile'
+
+- stage: PushImages
+
+  pool:
+    vmImage: ubuntu-latest
+  
+  jobs:
+  - job: PushImages
+    condition: succeeded()
+    steps:
+    - task: Docker@2
+      inputs:
+        command: 'push'
