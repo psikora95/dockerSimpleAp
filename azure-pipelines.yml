@@ -43,6 +43,14 @@ stages:
         tags: |
           latest
           $(Build.SourceVersion)
+    - task: AzureWebApp@1
+      name: DeploytoWebApp
+      inputs:
+        azureSubscription: 'sub-06(82fec995-d706-4757-a002-6bfc2d89631a)'
+        appType: 'webApp'
+        appName: 'mf01dev'
+        package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+        deploymentMethod: 'zipDeploy'
 
 - stage: PushImages
 
@@ -54,11 +62,4 @@ stages:
     condition: succeeded()
     steps:
     - script: docker images
-    - task: AzureWebApp@1
-      name: DeploytoWebApp
-      inputs:
-        azureSubscription: 'sub-06(82fec995-d706-4757-a002-6bfc2d89631a)'
-        appType: 'webApp'
-        appName: 'mf01dev'
-        package: '$(System.DefaultWorkingDirectory)/**/*.zip'
-        deploymentMethod: 'zipDeploy'
+    
