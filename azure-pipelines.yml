@@ -62,4 +62,17 @@ stages:
     condition: succeeded()
     steps:
     - script: docker images
-    
+
+- stage: DeployToAKS
+  
+  pool:
+    vmImage: ubuntu-latest
+  
+  jobs:
+  - job: pushToK8s
+    displayName: pushToK8s
+    steps:
+    - task: KubernetesManifest@1
+      inputs:
+        action: 'deploy'
+        connectionType: 'kubernetesServiceConnection'
