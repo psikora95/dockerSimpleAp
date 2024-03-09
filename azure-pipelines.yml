@@ -34,7 +34,8 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '**/SalesBook.LB/Dockerfile'
         containerRegistry: 'sub06-meritoacrmf'
-        repository: 'meritoService'
+        repository: 'SalesBook.LB'
+
       
   - job: BuildDocker_SalesBookWEB
     displayName: BuildDockerService-SalesBook.WEB
@@ -44,7 +45,7 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '**/SalesBook.WEB/Dockerfile'
         containerRegistry: 'sub06-meritoacrmf'
-        repository: 'meritoService'
+        repository: 'SalesBook.WEB'
 
 - stage: PushImages
 
