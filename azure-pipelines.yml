@@ -76,3 +76,5 @@ stages:
       inputs:
         action: 'deploy'
         connectionType: 'kubernetesServiceConnection'
+        kubernetesServiceConnection: 'aks01-serviceconnection'
+        manifests: '**/AKS/deployment.yaml'
