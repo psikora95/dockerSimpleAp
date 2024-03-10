@@ -186,5 +186,6 @@ stages:
     - script: echo $(dockerUserName) 
     - script: |
         docker login -u $(dockerUserName) -p $(dockerPassword)
-        docker image tag alpine:3.18 mifurm/alpinecustom:1.0.0
-        docker push mifurm/alpinecustom:1.0.0
+        docker image tag alpine:3.18 mifurm/alpinecustom:$(Build.BuildId)
+        docker push mifurm/alpinecustom:$(Build.BuildId)
+        
