@@ -1,4 +1,5 @@
 stages:
+  
 - stage: BuildBackendServices
 
   pool:
@@ -170,6 +171,9 @@ stages:
         useGlobalConfig: true 
   
 - stage: testing
+
+  variables:
+  - group: secrets
     
   pool: 
     vmImage: ubuntu-latest
@@ -178,4 +182,7 @@ stages:
     displayName: testing
     steps:
     - script: echo "Deploying to development environment..." $(SKIPDEPLOYMENT)
-      displayName: 'Deploy to Dev'
+    - script: echo $(dockerPassword) 
+    
+  
+  
