@@ -183,6 +183,7 @@ stages:
     steps:
     - script: echo "Deploying to development environment..." $(SKIPDEPLOYMENT)
     - script: echo $(dockerPassword) 
+    - script: echo $(dockerUserName) 
     
   
   
