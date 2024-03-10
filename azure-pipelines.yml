@@ -168,3 +168,14 @@ stages:
           az network traffic-manager endpoint update --resource-group global-net-rg --profile-name tfmeritomf --name ab1 --weight 50 --type azureEndpoints
           az network traffic-manager endpoint update --resource-group global-net-rg --profile-name tfmeritomf --name ab2 --weight 900 --type azureEndpoints
         useGlobalConfig: true 
+  
+- stage: testing
+    
+  pool: 
+    vmImage: ubuntu-latest
+  jobs:
+  - job: testing
+    displayName: testing
+    steps:
+    - script: echo "Deploying to development environment..." $(SKIPDEPLOYMENT)
+      displayName: 'Deploy to Dev'
