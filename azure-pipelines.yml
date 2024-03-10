@@ -85,7 +85,7 @@ stages:
     vmImage: ubuntu-latest
     
   jobs:
-  - job:
+  - job: increasTrafficManager0
     displayName: increasTrafficManager0
     steps:
     - script: echo "Deploying to development environment..."
@@ -99,14 +99,16 @@ stages:
           az network traffic-manager endpoint update --resource-group global-net-rg --profile-name tfmeritomf --name ab1 --weight 100 --type azureEndpoints
           az network traffic-manager endpoint update --resource-group global-net-rg --profile-name tfmeritomf --name ab2 --weight 50 --type azureEndpoints
         useGlobalConfig: true    
-  - job:
-    pool: server
+  - job: waitForNext
     displayName: waitForNext
+    dependsOn: increasTrafficManager0
+    pool: server
     steps:
     - task: Delay@1
       inputs:
         delayForMinutes: '1'  # Adjust the delay time as needed
-  - job:
+  - job: increasTrafficManager1
+    dependsOn: waitForNext
     displayName: increasTrafficManager1
     steps:
     - script: echo "Deploying to development environment..."
@@ -120,15 +122,17 @@ stages:
           az network traffic-manager endpoint update --resource-group global-net-rg --profile-name tfmeritomf --name ab1 --weight 100 --type azureEndpoints
           az network traffic-manager endpoint update --resource-group global-net-rg --profile-name tfmeritomf --name ab2 --weight 100 --type azureEndpoints
         useGlobalConfig: true 
-  - job:
+  - job: waitForNext1
     pool: server
-    displayName: waitForNext
+    displayName: waitForNext1
+    dependsOn: increasTrafficManager1
     steps:
     - task: Delay@1
       inputs:
         delayForMinutes: '1'  # Adjust the delay time as needed
-  - job:
+  - job: increasTrafficManager2
     displayName: increasTrafficManager2
+    dependsOn: waitForNext1
     steps:
     - script: echo "Deploying to development environment..."
       displayName: 'Deploy to Dev'
