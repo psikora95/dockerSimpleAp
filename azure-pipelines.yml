@@ -86,8 +86,10 @@ stages:
     
   jobs:
   - job:
-    displayName: changeRedirect
+    displayName: increasTrafficManager0
     steps:
+    - script: echo "Deploying to development environment..."
+      displayName: 'Deploy to Dev'
     - task: AzureCLI@2
       inputs:
         azureSubscription: 'sub-06(82fec995-d706-4757-a002-6bfc2d89631a)'
@@ -95,5 +97,47 @@ stages:
         scriptLocation: 'inlineScript'
         inlineScript: |
           az network traffic-manager endpoint update --resource-group global-net-rg --profile-name tfmeritomf --name ab1 --weight 100 --type azureEndpoints
-          az network traffic-manager endpoint update --resource-group global-net-rg --profile-name tfmeritomf --name ab2--weight 900 --type azureEndpoints
-        useGlobalConfig: true
+          az network traffic-manager endpoint update --resource-group global-net-rg --profile-name tfmeritomf --name ab2 --weight 50 --type azureEndpoints
+        useGlobalConfig: true    
+  - job:
+    pool: server
+    displayName: waitForNext
+    steps:
+    - task: Delay@1
+      inputs:
+        delayForMinutes: '1'  # Adjust the delay time as needed
+  - job:
+    displayName: increasTrafficManager1
+    steps:
+    - script: echo "Deploying to development environment..."
+      displayName: 'Deploy to Dev'
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'sub-06(82fec995-d706-4757-a002-6bfc2d89631a)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az network traffic-manager endpoint update --resource-group global-net-rg --profile-name tfmeritomf --name ab1 --weight 100 --type azureEndpoints
+          az network traffic-manager endpoint update --resource-group global-net-rg --profile-name tfmeritomf --name ab2 --weight 100 --type azureEndpoints
+        useGlobalConfig: true 
+  - job:
+    pool: server
+    displayName: waitForNext
+    steps:
+    - task: Delay@1
+      inputs:
+        delayForMinutes: '1'  # Adjust the delay time as needed
+  - job:
+    displayName: increasTrafficManager2
+    steps:
+    - script: echo "Deploying to development environment..."
+      displayName: 'Deploy to Dev'
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'sub-06(82fec995-d706-4757-a002-6bfc2d89631a)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az network traffic-manager endpoint update --resource-group global-net-rg --profile-name tfmeritomf --name ab1 --weight 100 --type azureEndpoints
+          az network traffic-manager endpoint update --resource-group global-net-rg --profile-name tfmeritomf --name ab2 --weight 200 --type azureEndpoints
+        useGlobalConfig: true 
