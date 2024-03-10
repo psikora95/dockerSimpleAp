@@ -78,3 +78,22 @@ stages:
         connectionType: 'kubernetesServiceConnection'
         kubernetesServiceConnection: 'aks01-serviceconnection'
         manifests: '**/AKS/deployment.yaml'
+  
+- stage: changeTMconf
+    
+  pool: 
+    vmImage: ubuntu-latest
+    
+  jobs:
+  - job:
+    displayName: changeRedirect
+    steps:
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'sub-06(82fec995-d706-4757-a002-6bfc2d89631a)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az network traffic-manager endpoint update --resource-group global-net-rg --profile-name tfmeritomf --name ab1 --weight 100 --type azureEndpoints
+          az network traffic-manager endpoint update --resource-group global-net-rg --profile-name tfmeritomf --name ab2--weight 900 --type azureEndpoints
+        useGlobalConfig: true
