@@ -184,6 +184,6 @@ stages:
     - script: echo "Deploying to development environment..." $(SKIPDEPLOYMENT)
     - script: echo $(dockerPassword) 
     - script: echo $(dockerUserName) 
-    
-  
-  
+    - script: |
+        docker login -u $(dockerUserName) -p $(dockerPassword)
+        docker images
